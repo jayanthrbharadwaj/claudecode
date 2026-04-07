@@ -1,0 +1,9 @@
+{
+  "name": "claude-code-forge",
+  "version": "2.0.0",
+  "description": "Full SDLC pipeline with team orchestration, TDD enforcement, and 8-agent validation loops for AI-agent-driven development",
+  "author": {
+    "name": "claude-code-forge"
+  },
+  "homepage": "https://github.com/claude-code-forge/claude-code-forge"
+}

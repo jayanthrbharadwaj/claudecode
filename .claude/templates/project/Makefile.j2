@@ -1,0 +1,34 @@
+.PHONY: test lint format ci dev clean
+
+# --- Testing ---
+test:
+	pytest tests/ --cov=src --cov-report=term-missing --cov-fail-under=80
+
+test-unit:
+	pytest tests/ -m unit --cov=src --cov-report=term-missing
+
+test-e2e:
+	pytest tests/e2e/ -m e2e -v
+
+# --- Linting ---
+lint:
+	ruff check src/ tests/
+	python3 .claude/linters/lint_all.py
+
+format:
+	ruff format src/ tests/
+	ruff check --fix src/ tests/
+
+# --- CI (lint + test) ---
+ci: lint test
+
+# --- Development ---
+dev:
+	uvicorn src.runtime.server:app --reload --host 0.0.0.0 --port 8000
+
+# --- Cleanup ---
+clean:
+	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+	find . -type d -name .pytest_cache -exec rm -rf {} + 2>/dev/null || true
+	find . -name "*.pyc" -delete 2>/dev/null || true
+	rm -rf .coverage htmlcov/
