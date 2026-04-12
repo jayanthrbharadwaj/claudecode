@@ -1,17 +1,24 @@
 name: Daily Audio Sync
 on:
   schedule:
-    - cron: '0 4 * * *' # Runs at 4:00 AM UTC
-  workflow_dispatch: # Allows manual testing
+    - cron: '0 4 * * *'  # Runs automatically at 4:00 AM UTC
+  workflow_dispatch:      # <--- This enables the manual "Run workflow" button
+    inputs:
+      custom_text:
+        description: 'Optional: Enter Sanskrit text to generate (leave blank for default)'
+        required: false
+        default: ''
 
 jobs:
   run-sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
       
       - name: Install dependencies
         run: npm install firebase-admin axios
@@ -19,4 +26,6 @@ jobs:
       - name: Execute Sync Script
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          # Pass the manual input to the script as an environment variable
+          MANUAL_INPUT_TEXT: ${{ github.event.inputs.custom_text }}
         run: node sync-script.js
