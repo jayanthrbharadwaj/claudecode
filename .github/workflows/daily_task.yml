@@ -30,3 +30,11 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           MANUAL_INPUT_TEXT: ${{ github.event.inputs.custom_text }}
         run: node sync-script.js
+      - name: Upload Cropped Audio and Metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: panchanga-artifacts
+          path: |
+            panchanga_trimmed_*.wav
+            panchanga_metadata_*.json
+  
