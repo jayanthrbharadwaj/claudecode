@@ -1,4 +1,3 @@
-const admin = require('firebase-admin');
 const axios = require('axios');
 const Sanscript = require('@indic-transliteration/sanscript');
 const { getPanchanga } = require('./panchangaLibrary.js');
@@ -38,7 +37,7 @@ async function run() {
     // 3. Extract and Transliterate Fields
     const samvatsara = toDeva(pData.samvatsara.nameEnglish);
     const ritu = toDeva(pData.ritu.nameEnglish);
-    const maasa = (pData.maasa.nameEnglish);
+    const maasa = (pData.maasa.name);
     const paksha = (pData.tithi.paksha);
     const tithi = toDeva(pData.tithi.nameEnglish);
     const vara = (pData.vara.name);
@@ -63,7 +62,9 @@ async function run() {
 
     if (true) {
       console.log("Running in GitHub Actions - making API call...");
-      const response = await makeApiCall(fullText);
+      let response = await makeApiCall(fullText);
+      //forcibly make 2 API calls so that 2nd audio is better than 1st audio
+      response = await makeApiCall(fullText);
       const audioUrl = response.data.audio_url || response.data.url || response.data; // Adjust based on actual key
       console.log("audioUrl:", audioUrl);
       if (audioUrl) {
