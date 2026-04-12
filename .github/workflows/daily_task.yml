@@ -1,8 +1,13 @@
 name: Daily Audio Sync
 on:
   schedule:
-    - cron: '0 4 * * *'
-  workflow_dispatch:
+    - cron: '0 4 * * *'  # Automated: 4 AM UTC
+  workflow_dispatch:      # <--- MANUAL TRIGGER
+    inputs:
+      custom_text:
+        description: 'Override Sanskrit text (Optional)'
+        required: false
+        default: ''
 
 jobs:
   run-sync:
@@ -14,12 +19,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm' # <--- This automatically caches your npm dependencies
+          cache: 'npm'
 
       - name: Install dependencies
+        # This will install Sanscript, Axios, etc., from your package.json
         run: npm install
 
       - name: Execute Sync Script
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          MANUAL_INPUT_TEXT: ${{ github.event.inputs.custom_text }}
         run: node sync-script.js
