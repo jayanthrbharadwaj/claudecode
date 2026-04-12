@@ -6,15 +6,7 @@ const { pipeline } = require('@xenova/transformers');
 const { MPEGDecoder } = require('mpg123-decoder');
 const { WaveFile } = require('wavefile');
 const fs = require('fs');
-const serviceAccount = require('./serviceAccount.json');
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  storageBucket: `${serviceAccount.project_id}.appspot.com`
-});
-
-const db = admin.firestore();
-const storage = admin.storage();
 const makeApiCall = async (fullText) => {
   // 5. Hit the Voice Generation API
   const response = await axios.post('https://yourvoic.com/api/generate', {
