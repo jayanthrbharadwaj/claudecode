@@ -1,0 +1,9 @@
+{
+  "name": "panchanga-voice-sync",
+  "version": "1.0.0",
+  "dependencies": {
+    "@indic-transliteration/sanscript": "^1.1.0",
+    "axios": "^1.6.0",
+    "firebase-admin": "^12.0.0"
+  }
+}
