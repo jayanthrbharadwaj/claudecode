@@ -39,7 +39,7 @@ async function run() {
     const ritu = toDeva(pData.ritu.nameEnglish);
     const maasa = (pData.maasa.name);
     const paksha = (pData.tithi.paksha);
-    const tithi = toDeva(pData.tithi.nameEnglish);
+    const tithi = (pData.tithi.name);
     const vara = (pData.vara.name);
     const nakshatra = (pData.nakshatra.name);
     const yoga = (pData.yoga.name);
