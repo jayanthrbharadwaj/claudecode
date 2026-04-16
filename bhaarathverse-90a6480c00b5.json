@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "bhaarathverse",
+  "private_key_id": "90a6480c00b515eb13c93c52157321b405800c37",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCz8mFSj1ltqLbt\nEQ6q1ryjfdtuPjkwyUHTSO6jo2ZaBB5eZzCGUIhxlwNTLn0wYTdYxoqlS1gfaH+y\n3rZXO177W2TQBdfQ8bvW88XZQAsJe2WCrsI6W81rSO2Gc0rQNlQCHjMoH+Hc6tzA\n1UiyKhUoCsBO0hxpbznI/j2BNSqIb6XHKgQV5UOVkIL0DAsrMuBSQl6ozTkGpGkH\naHMZs/YLf3taGAd4oONL5jH2XyBpH4rfMX6bUTY7HelpEnXCBJ4fvGfXSuCUJpih\nEQTJOHSYuJdmbGA+dUN0EmZ5adMWPep/ihFUHpVey3oYZUvQsms7jN98+aQ68bIC\nJ1HKMwiFAgMBAAECggEAKRWW2NW30kyp7zhsw96hVSagGeyE/DmHGOlW6u+cp8K2\n+FDRCGmMrXqQHMbJeGlJzLAP6atpJEqklT86HHKGvhbgzon2+1Kl02725iI0IucU\nhyDFYbOiE/Ojn4XlN+KfjZg9j9SvqdPJsRFBNsRa7jh+LcDVEdF+PQCnJD/yRRHu\nUCCsBnMFEBsSyNrdqrYxawk3Fk5MhwKBqDZ5ZG1JlqjdFmEGxKlL4Ot6u12zr6Eu\n9WjW4ao63yFilXxSKytrFAs42m4ogDSsO2kk2g+IZ1a6L+7p4FEy0Mdbez/YeXEO\n47HA9ctzJah13khcWhqtEjKv5U+YXgtJNdorOX0ToQKBgQDownkx5jOs2towY7sv\nWLRbRISXqvFKEhtoz0kjElBQYDEczpqhCGmapOse8d/pzypfQ31LChhxcJHiOdED\nZ1+yDBh190GR9b1WmsYEX1N/CdUb4ydfuB8N+LJch035EE4ldsaUzllPctNw7FKU\ntsjCgNhqCYrfj8zXXUFhql3fSQKBgQDF6feHhWiK0cXKcmGdz1B6QQo8F8ogPZbm\nIgy0dalQbwYbFJkus/dJkovw57ZfE0dnEYlA0WmN1NM0skbpDAk6K7l8lSrxvuF9\n1fQ4j7uMPPgW8+Dd+l4pilNJzYHgZl7ELtqkABvuOEf6AEDdNjo4xWKOmdnOi+i6\nqlCyLdKTXQKBgHQhI0qsKjgh8R6Xg7r5rPKkWus5FK36HsbKNRlUd9HCTH6s7iVO\nBzJq+gw0bZ1ACUoCaC7aWJuwqHiQlCH4n5w7wLCKrqJeUxs0mXtw/D2z8Cm7yddO\nC+ByprrXnyWW5wZ2Hln8Ij8rcSc0IXelQsEYe+Fb5XfpTTBejNJnp/JRAoGBAJ3Z\nY3EVODIv6R70Z2LkLH21TiJrnuxj8uyNj7CGf4oFYstKfHpBUyO83BxB0rS1vac4\n1015OETEz8chwWiyDtH0ebYhiuTQpywj7usFyEGrhvtXe6vPujZLeu5MGCAPxdmW\nvQ88fwpanR2KAjHsxDbvRxIRJySTdgUbPc0+usqJAoGAe624xt8Sup0j1B2OAlVT\nAR/owAFYwHWigZqgyJhDzaDaPrvKlotXFJyxeuH1VUT0CPeWjFG3S59jtdqgzZXQ\nEshyRASXhDMDz7ZM7RpCeJSjPBtLFMxRsqbRkSAVidUrqAJP+P/5xfi9kIE6iqQK\nj33pR1/aueadRHXUBZXUSxg=\n-----END PRIVATE KEY-----\n",
+  "client_email": "vertex-express@bhaarathverse.iam.gserviceaccount.com",
+  "client_id": "104375720245726535355",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vertex-express%40bhaarathverse.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

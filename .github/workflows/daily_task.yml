@@ -1,16 +1,12 @@
-name: Daily Audio Sync
+name: Daily Panchanga Audio Sync
+
 on:
   schedule:
-    - cron: '0 4 * * *'  # Automated: 4 AM UTC
-  workflow_dispatch:      # <--- MANUAL TRIGGER
-    inputs:
-      custom_text:
-        description: 'Override Sanskrit text (Optional)'
-        required: false
-        default: ''
+    - cron: '30 23 * * *' # 5:00 AM IST (UTC 23:30 previous day)
+  workflow_dispatch:
 
 jobs:
-  run-sync:
+  sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,16 +18,24 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        # This will install Sanscript, Axios, etc., from your package.json
-        run: npm install
+        run: npm ci
 
-      - name: Execute Sync Script
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}'
+          token_format: 'access_token'
+
+      - name: Run sync script
+        env:
+          GOOGLE_ACCESS_TOKEN: '${{ steps.auth.outputs.access_token }}'
         run: node sync-script.js
-      - name: Upload Cropped Audio and Metadata
+
+      - name: Upload Audio Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: panchanga-artifacts
+          name: daily-panchanga-audio
           path: |
-            panchanga_trimmed_*.wav
-            panchanga_metadata_*.json
-  
+            output.wav
+            output_final.wav
