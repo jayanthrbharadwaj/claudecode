@@ -26,9 +26,11 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}'
           token_format: 'access_token'
+          create_credentials_file: true
 
       - name: Run sync script
         env:
+          GOOGLE_APPLICATION_CREDENTIALS: '${{ steps.auth.outputs.credentials_file_path }}'
           GOOGLE_ACCESS_TOKEN: '${{ steps.auth.outputs.access_token }}'
         run: node sync-script.js
 
