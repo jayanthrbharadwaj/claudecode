@@ -6,9 +6,19 @@ const serviceAccountPath = path.resolve(__dirname, '../bhaarathverse-90a6480c00b
 const serviceAccount = require(serviceAccountPath);
 
 if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-  });
+  if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+    // CI / production — use ADC via the env var set by the auth step
+    admin.initializeApp({
+      credential: admin.credential.applicationDefault(),
+      projectId: 'bhaarathverse'
+    });
+  } else {
+    // Local development — use the local key file
+    const serviceAccount = require('../bhaarathverse-90a6480c00b5.json');
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
+  }
 }
 
 const db = admin.firestore();
