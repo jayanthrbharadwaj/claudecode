@@ -41,7 +41,7 @@ const generatePanchangaText = () => {
   const pData = JSON.parse(getPanchanga(getISTDate()));
   const toKannada = (text, from = 'itrans') => Sanscript.t(text, from, 'kannada');
 
-  const samvatsara = toKannada(pData.samvatsara.nameEnglish.toLowerCase());
+  const samvatsara = toKannada(pData.samvatsara.name, 'devanagari');
   const ritu = toKannada(pData.ritu.nameEnglish.toLowerCase());
   const maasa = toKannada(pData.maasa.name, 'devanagari');
   const paksha = toKannada(pData.tithi.paksha, 'devanagari');
@@ -53,7 +53,7 @@ const generatePanchangaText = () => {
   const aayana = toKannada("uttaraayaNe");
 
   const fullText = `${aayana},${ritu}ಋತೌ,${maasa}ಮಾಸೇ,${paksha}:,${tithi}ಪುಣ್ಯತಿಥೌ,${vara}ವಾಸರಯುಕ್ತಾಯಾಂ,${nakshatra}ನಕ್ಷತ್ರೇ,${yoga}ಯೋಗೇ,${karana}ಕರಣೇ,ಏವಂಗುಣ ವಿಶೇಷಣವಿಶಿಷ್ಟಾಯಾಮ್,ಶುಭತಿಥೌ. ಮಮ ಶಕ್ತಿ..., ಭಕ್ತಿ..., ಯುಕ್ತಿ... ದೃಢತಾಪ್ರಾಪ್ತ್ಯರ್ಥಂ, ಶುಭ ಕರ್ಮ ಪ್ರಾರಮ್ಭಂ ಕರಿಷ್ಯೇ...`;
-
+  console.log("samvatsara ", pData.samvatsara.name)
   return { fullText, pData, samvatsara, maasa };
 }
 
