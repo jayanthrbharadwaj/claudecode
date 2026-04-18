@@ -48,7 +48,8 @@ const YOGAS = [
     'Siddha', 'Sadhya', 'Shubha', 'Shukla', 'Brahma', 'Indra', 'Vaidhriti'
 ];
 
-const KARANAS = ['Bava', 'Balava', 'Kaulava', 'Taitila', 'Gara', 'Vanija', 'Vishti'];
+const KARANAS = ['Bava', 'Balava', 'Kaulava', 'Taitila', 'Gara', 'Vanija', 'Vishti',
+    'Shakuni', 'Chatushpada', 'Naga', 'Kimstughna'];
 
 const VARAS = ['Ravivara', 'Somavara', 'Mangalavara', 'Budhavara', 'Guruvara', 'Shukravara', 'Shanivara'];
 
@@ -111,7 +112,7 @@ const TRANSLATIONS = {
         pakshas: { Shukla: 'Shukla Paksha', Krishna: 'Krishna Paksha' },
         nakshatras: { Ashwini: 'Ashwini', Bharani: 'Bharani', Krittika: 'Krittika', Rohini: 'Rohini', Mrigashira: 'Mrigashira', Ardra: 'Ardra', Punarvasu: 'Punarvasu', Pushya: 'Pushya', Ashlesha: 'Ashlesha', Magha: 'Magha', 'Purva Phalguni': 'Purva Phalguni', 'Uttara Phalguni': 'Uttara Phalguni', Hasta: 'Hasta', Chitra: 'Chitra', Swati: 'Swati', Vishakha: 'Vishakha', Anuradha: 'Anuradha', Jyeshtha: 'Jyeshtha', Mula: 'Mula', 'Purva Ashadha': 'Purva Ashadha', 'Uttara Ashadha': 'Uttara Ashadha', Shravana: 'Shravana', Dhanishta: 'Dhanishta', Shatabhisha: 'Shatabhisha', 'Purva Bhadrapada': 'Purva Bhadrapada', 'Uttara Bhadrapada': 'Uttara Bhadrapada', Revati: 'Revati' },
         yogas: { Vishkumbha: 'Vishkumbha', Priti: 'Priti', Ayushman: 'Ayushman', Saubhagya: 'Saubhagya', Shobhana: 'Shobhana', Atiganda: 'Atiganda', Sukarma: 'Sukarma', Dhriti: 'Dhriti', Shula: 'Shula', Ganda: 'Ganda', Vriddhi: 'Vriddhi', Dhruva: 'Dhruva', Vyaghata: 'Vyaghata', Harshana: 'Harshana', Vajra: 'Vajra', Siddhi: 'Siddhi', Vyatipata: 'Vyatipata', Variyan: 'Variyan', Parigha: 'Parigha', Shiva: 'Shiva', Siddha: 'Siddha', Sadhya: 'Sadhya', Shubha: 'Shubha', Shukla: 'Shukla', Brahma: 'Brahma', Indra: 'Indra', Vaidhriti: 'Vaidhriti' },
-        karanas: { Bava: 'Bava', Balava: 'Balava', Kaulava: 'Kaulava', Taitila: 'Taitila', Gara: 'Gara', Vanija: 'Vanija', Vishti: 'Vishti' },
+        karanas: { Bava: 'Bava', Balava: 'Balava', Kaulava: 'Kaulava', Taitila: 'Taitila', Gara: 'Gara', Vanija: 'Vanija', Vishti: 'Vishti', Shakuni: 'Shakuni', Chatushpada: 'Chatushpada', Naga: 'Naga', Kimstughna: 'Kimstughna' },
         varas: { Sunday: 'Sunday', Monday: 'Monday', Tuesday: 'Tuesday', Wednesday: 'Wednesday', Thursday: 'Thursday', Friday: 'Friday', Saturday: 'Saturday' },
         maasas: { Chaitra: 'Chaitra', Vaishakha: 'Vaishakha', Jyeshtha: 'Jyeshtha', Ashadha: 'Ashadha', Shravana: 'Shravana', Bhadrapada: 'Bhadrapada', Ashwina: 'Ashwina', Kartika: 'Kartika', Margashirsha: 'Margashirsha', Pausha: 'Pausha', Magha: 'Magha', Phalguna: 'Phalguna' },
         ritus: { Vasanta: 'Vasanta', Grishma: 'Grishma', Varsha: 'Varsha', Sharad: 'Sharad', Hemanta: 'Hemanta', Shishira: 'Shishira' },
@@ -171,7 +172,7 @@ function getMoonLongitude(date) {
 
 function calculateTithi(date) {
     const d = new Date(date);
-    d.setHours(6, 0, 0, 0); // use sunrise reference
+    d.setUTCHours(0, 30, 0, 0); // 06:00 IST = 00:30 UTC — same result on any server timezone
     const sunLong = getSunLongitude(d);
     const moonLong = getMoonLongitude(d);
     let diff = moonLong - sunLong;
@@ -210,8 +211,16 @@ function calculateYoga(date) {
 
 function calculateKarana(date) {
     const tithi = calculateTithi(date);
-    const idx = ((tithi.number - 1) * 2 + Math.floor(tithi.progress * 2)) % 7;
-    return { name: KARANAS[idx] };
+    const karanaIndex = (tithi.number - 1) * 2 + Math.floor(tithi.progress * 2);
+    let name;
+    if (karanaIndex === 0) {
+        name = KARANAS[10]; // Kimstughna — first half of Shukla Pratipada
+    } else if (karanaIndex >= 57) {
+        name = KARANAS[7 + (karanaIndex - 57)]; // 57→Shakuni, 58→Chatushpada, 59→Naga
+    } else {
+        name = KARANAS[(karanaIndex - 1) % 7];
+    }
+    return { name, number: karanaIndex + 1 };
 }
 
 function calculateVara(date) {
@@ -270,10 +279,13 @@ function getMaasaFromPurnima(purnimaDate, date) {
 function calculateMaasa(date, isAmant = false) {
     let purnimaDate, maasaName, purnimaNakshatra;
     if (isAmant) {
-        const prevAm = findPreviousAmavasya(date);
-        const nextAm = findNextAmavasya(date);
-        const pm = Astronomy.SearchMoonPhase(180, Astronomy.MakeTime(prevAm), 20);
-        purnimaDate = (pm && pm.date > prevAm && pm.date < nextAm) ? pm.date : findNextPurnima(prevAm);
+        // Use tithi paksha to pick direction — immune to the "new moon before/after sunrise" bug.
+        // Krishna paksha: Purnima already passed this month → look back.
+        // Shukla paksha:  Purnima is upcoming this month    → look forward.
+        const tithi = calculateTithi(date);
+        purnimaDate = tithi.paksha === 'Krishna'
+            ? findPreviousPurnima(date)
+            : findNextPurnima(date);
     } else {
         purnimaDate = findNextPurnima(date);
     }
