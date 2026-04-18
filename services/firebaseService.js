@@ -1,10 +1,6 @@
 const admin = require('firebase-admin');
 const path = require('path');
 
-// Initialize Firebase Admin using the service account in the root directory
-const serviceAccountPath = path.resolve(__dirname, '../bhaarathverse-90a6480c00b5.json');
-const serviceAccount = require(serviceAccountPath);
-
 if (!admin.apps.length) {
   if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
     // CI / production — use ADC via the env var set by the auth step
