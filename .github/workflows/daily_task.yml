@@ -2,7 +2,7 @@ name: Daily Panchanga Audio Sync
 
 on:
   schedule:
-    - cron: '30 0 * * *'  # 6:00 AM IST (UTC+5:30)
+    - cron: '0 23 * * *'   # 4:30 AM IST
   workflow_dispatch:      # <--- MANUAL TRIGGER
     inputs:
       custom_text:
